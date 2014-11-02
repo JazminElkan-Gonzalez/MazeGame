@@ -28,7 +28,7 @@ class Character (object):
                 if Level.game._board[index(self._x,self._y)] == 2:
                     self._y = ty
                     self._img.move(0,dy*CELL_SIZE)
-                if Level.game._board[index(tx,ty+1)] == 0 and Level.game._board[index(self._x,self._y)] != 0:
+                if Level.game._board[index(tx,ty+1)] == 0 or Level.game._board[index(tx,ty+1)] == 3:
                     for i in xrange(20-ty):
                         if Level.game._board[index(tx,ty+i)] != 0:
                             if  Level.game._board[index(tx,ty+i)] == 3:
