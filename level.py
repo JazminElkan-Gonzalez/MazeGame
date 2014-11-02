@@ -1,18 +1,27 @@
 from utils import *
 from graphics import *
 
-
 class Level(object):
 
+    game = None
 
     def __init__(self):
-        self.board=self.create_level()
+        self._board=self.create_level()
+        self._objects = []
+        Level.game = self
+
+    def board(self):
+        return self._board
+
+    def objects(self):
+        return self._objects
 
 # 0 empty
 # 1 brick
 # 2 ladder
 # 3 rope
 # 4 gold
+
     def create_level(self):
         screen = []
         screen.extend([1,1,1,1,1,1,1,1,1,1,1,1,1,2,0,0,0,0,0,0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,0])
@@ -47,11 +56,14 @@ class Level(object):
         def image (sx,sy,what):
             return Image(Point(sx+CELL_SIZE/2,sy+CELL_SIZE/2),what)
 
-        for (index,cell) in enumerate(self.board):
+        for (index,cell) in enumerate(self._board):
             if cell != 0:
                 (sx,sy) = screen_pos_index(index)
                 elt = image(sx,sy, pictures[cell])
+                self._objects.append(elt)
                 # elt = Rectangle(Point(sx+1,sy+1),
                 #                 Point(sx+CELL_SIZE-1,sy+CELL_SIZE-1))
                 # elt.setFill('sienna')
                 elt.draw(window)
+            else:
+                self._objects.append(None)

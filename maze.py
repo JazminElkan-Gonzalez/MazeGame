@@ -54,11 +54,11 @@ def main ():
 
     screen = lol.create_screen(window)
 
-    p = Player(10,18,window,level)
+    p = Player(17,18,window)
 
-    baddie1 = Baddie(5,1,window,level,p)
-    baddie2 = Baddie(10,1,window,level,p)
-    baddie3 = Baddie(15,1,window,level,p)
+    baddie1 = Baddie(19,2,window,p)
+    baddie2 = Baddie(19,7,window,p)
+    baddie3 = Baddie(24,18,window,p)
 
     while not p.at_exit():
         key = window.checkKey()
