@@ -29,7 +29,7 @@ class Character (object):
                     self._y = ty
                     self._img.move(0,dy*CELL_SIZE)
                 if Level.game._board[index(tx,ty+1)] == 0 or Level.game._board[index(tx,ty+1)] == 3:
-                    for i in xrange(20-ty):
+                    for i in xrange(LEVEL_HEIGHT-ty):
                         if Level.game._board[index(tx,ty+i)] != 0:
                             if  Level.game._board[index(tx,ty+i)] == 3:
                                 self._img.move(0, (dy+i)*CELL_SIZE)
@@ -38,6 +38,11 @@ class Character (object):
                                 self._img.move(0, (dy+i-1)*CELL_SIZE)
                                 self._y = ty + i - 1
                             break
+                        if ty+i == LEVEL_HEIGHT-1:
+                            self._img.move(0, (dy+i)*CELL_SIZE)
+                            self._y = ty + i
+                            break
+
                 self._x = tx
                 self._img.move(dx*CELL_SIZE,0)
             if Level.game._board[index(tx,ty)] == 1:    #brick

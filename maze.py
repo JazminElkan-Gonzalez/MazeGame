@@ -65,6 +65,8 @@ def main ():
         if key == 'q':
             window.close()
             exit(0)
+        if key == 'a' or key == 'z':
+            p.dig(key)
         if key in MOVE:
             (dx,dy) = MOVE[key]
             p.move(dx,dy)
