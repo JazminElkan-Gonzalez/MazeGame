@@ -31,7 +31,12 @@ class Character (object):
                 if Level.game._board[index(tx,ty+1)] == 0 or Level.game._board[index(tx,ty+1)] == 3:
                     for i in xrange(LEVEL_HEIGHT-ty):
                         if Level.game._board[index(tx,ty+i)] != 0:
-                            if  Level.game._board[index(tx,ty+i)] == 3:
+                            if Level.game._board[index(tx,ty+i)] == 3:
+                                self._img.move(0, (dy+i)*CELL_SIZE)
+                                self._y = ty + i
+                            elif Level.game._board[index(tx,ty+i)] == 4:
+                                Level.game._objects[index(tx,ty+i)].undraw()
+                                Level.game._board[index(tx,ty+i)] = 0
                                 self._img.move(0, (dy+i)*CELL_SIZE)
                                 self._y = ty + i
                             else:
