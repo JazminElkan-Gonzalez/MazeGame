@@ -25,9 +25,27 @@ class Character (object):
         ty = self._y + dy
         if tx >= 0 and ty >= 0 and tx < LEVEL_WIDTH and ty < LEVEL_HEIGHT:
             if Level.game._board[index(tx,ty)] == 0:    #empty
+                if Level.game._board[index(self._x,self._y)] == 2:
+                    self._y = ty
+                    self._img.move(0,dy*CELL_SIZE)
+                if Level.game._board[index(tx,ty+1)] == 0 and Level.game._board[index(self._x,self._y)] != 0:
+                    for i in xrange(20-ty):
+                        if Level.game._board[index(tx,ty+i)] != 0:
+                            print ty, i
+                            self._img.move(0, (i-1)*CELL_SIZE)
+                            self._y = self._y + i - 1
+                            break
+                self._x = tx
+                self._img.move(dx*CELL_SIZE,0)
+                print self._x, self._y
+            if Level.game._board[index(tx,ty)] == 1:    #brick
+                pass
+            if Level.game._board[index(tx,ty)] == 2:    #ladder
                 self._x = tx
                 self._y = ty
                 self._img.move(dx*CELL_SIZE,dy*CELL_SIZE)
+            if Level.game._board[index(tx,ty)] == 3:    #rope
+                pass
             if Level.game._board[index(tx,ty)] == 4:    #gold
                 Level.game._objects[index(tx,ty)].undraw()
                 Level.game._board[index(tx,ty)] = 0
@@ -35,4 +53,4 @@ class Character (object):
                 self._y = ty
                 self._img.move(dx*CELL_SIZE,dy*CELL_SIZE)
 
-                
+
