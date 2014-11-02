@@ -67,6 +67,8 @@ def main ():
             exit(0)
         if key == 'a' or key == 'z':
             p.dig(key)
+        if 4 not in lol.board():
+            lol.win(window)
         if key in MOVE:
             (dx,dy) = MOVE[key]
             p.move(dx,dy)
