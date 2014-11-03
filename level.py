@@ -66,7 +66,10 @@ class Level(object):
         gold = "gold.gif"
         pictures = ["blank", brick, ladder, rope, gold]
         def image (sx,sy,what):
-            return Image(Point(sx+CELL_SIZE/2,sy+CELL_SIZE/2),what)
+            if what != pictures[1]:
+                return Image(Point(sx+CELL_SIZE/2,sy+CELL_SIZE/2),what)
+            else:
+                return Brick(Point(sx+CELL_SIZE/2,sy+CELL_SIZE/2), index, window, what)
 
         for (index,cell) in enumerate(self._board):
             if cell != 0:
@@ -79,3 +82,5 @@ class Level(object):
                 elt.draw(window)
             else:
                 self._objects.append(None)
+
+from brick import *

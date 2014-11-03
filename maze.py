@@ -16,13 +16,7 @@ from queue import *
 
 
 
-def won (window):
-    t = Text(Point(WINDOW_WIDTH/2+10,WINDOW_HEIGHT/2+10),'YOU WON!')
-    t.setSize(36)
-    t.setTextColor('red')
-    t.draw(window)
-    window.getKey()
-    exit(0)
+
 
 MOVE = {
     'Left': (-1,0),
@@ -60,14 +54,16 @@ def main ():
             window.close()
             exit(0)
         if key == 'a' or key == 'z':
-            p.dig(key)
+            p.dig(key, Eq)
         if 4 not in lol.board():
             lol.win(window)
         if key in MOVE:
             (dx,dy) = MOVE[key]
             p.move(dx,dy)
+        if lol._board[index(p.x(), p.y())] == 1:
+            lost(window) 
         time.sleep(0.05)
-        Eq.dequeue_if_ready()
+        Eq.dequeue_if_ready(window)
         # baddies should probably move here
 
     won(window)

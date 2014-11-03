@@ -9,14 +9,16 @@ class Player (Character):
     def at_exit (self):
         return (self._y == 0)
 
-    def dig(self, key):
+    def dig(self, key, q):
         xDict = {'a':-1, 'z':1}
         brickY = self._y+1
         brickX = self._x+xDict[key]
         if Level.game._board[index(brickX, brickY)] == 1 and Level.game._board[index(brickX, self._y)] == 0:
             Level.game._objects[index(brickX,brickY)].undraw()
             Level.game._board[index(brickX,brickY)] = 0
+            q.enqueue(50,Level.game._objects[index(brickX,brickY)])
 
+            
     def move (self,dx,dy):
         tx = self._x + dx
         ty = self._y + dy
