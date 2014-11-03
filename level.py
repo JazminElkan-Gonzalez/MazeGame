@@ -22,6 +22,18 @@ class Level(object):
 # 3 rope
 # 4 gold
 
+    def win(self,window):
+        def image (sx,sy,what):
+            return Image(Point(sx+CELL_SIZE/2,sy+CELL_SIZE/2),what)
+            
+        Level.game._board[index(34,0)] = 2
+        Level.game._board[index(34,1)] = 2
+        Level.game._board[index(34,2)] = 2
+        for i in range(3):
+            (sx,sy) = screen_pos_index(index(34,i))
+            elt = image(sx,sy, "ladder.gif")
+            elt.draw(window)
+
     def create_level(self):
         screen = []
         screen.extend([1,1,1,1,1,1,1,1,1,1,1,1,1,2,0,0,0,0,0,0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,0])
