@@ -14,6 +14,11 @@ class Character (object):
     def same_loc (self,x,y):
         return (self._x == x and self._y == y)
 
+    def x(self):
+        return self._x
+
+    def y(self):
+        return self._y
 # 0 empty
 # 1 brick
 # 2 ladder
@@ -35,8 +40,6 @@ class Character (object):
                                 self._img.move(0, (dy+i)*CELL_SIZE)
                                 self._y = ty + i
                             elif Level.game._board[index(tx,ty+i)] == 4:
-                                Level.game._objects[index(tx,ty+i)].undraw()
-                                Level.game._board[index(tx,ty+i)] = 0
                                 self._img.move(0, (dy+i)*CELL_SIZE)
                                 self._y = ty + i
                             else:
@@ -61,8 +64,6 @@ class Character (object):
                 self._y = ty
                 self._img.move(dx*CELL_SIZE,dy*CELL_SIZE)
             if Level.game._board[index(tx,ty)] == 4:    #gold
-                Level.game._objects[index(tx,ty)].undraw()
-                Level.game._board[index(tx,ty)] = 0
                 self._x = tx
                 self._y = ty
                 self._img.move(dx*CELL_SIZE,dy*CELL_SIZE)

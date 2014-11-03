@@ -1,3 +1,5 @@
+from graphics import *
+
 LEVEL_WIDTH = 35
 LEVEL_HEIGHT = 20    
 
@@ -15,3 +17,12 @@ def screen_pos_index (index):
 
 def index (x,y):
     return x + (y*LEVEL_WIDTH)
+
+    
+def lost (window):
+    t = Text(Point(WINDOW_WIDTH/2+10,WINDOW_HEIGHT/2+10),'YOU LOST!')
+    t.setSize(36)
+    t.setTextColor('red')
+    t.draw(window)
+    window.getKey()
+    exit(0)

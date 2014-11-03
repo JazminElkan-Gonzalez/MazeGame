@@ -12,14 +12,9 @@ from graphics import *
 from player import *
 from baddie import *
 from utils import *
+from queue import *
 
-def lost (window):
-    t = Text(Point(WINDOW_WIDTH/2+10,WINDOW_HEIGHT/2+10),'YOU LOST!')
-    t.setSize(36)
-    t.setTextColor('red')
-    t.draw(window)
-    window.getKey()
-    exit(0)
+
 
 def won (window):
     t = Text(Point(WINDOW_WIDTH/2+10,WINDOW_HEIGHT/2+10),'YOU WON!')
@@ -53,13 +48,12 @@ def main ():
     level = lol.create_level()
 
     screen = lol.create_screen(window)
-
+    Eq = Queue()
     p = Player(17,18,window)
-
-    baddie1 = Baddie(19,2,window,p)
-    baddie2 = Baddie(19,7,window,p)
-    baddie3 = Baddie(24,18,window,p)
-
+    baddie1 = Baddie(19,2,window,p,5, Eq)
+    baddie2 = Baddie(19,7,window,p,5, Eq)
+    baddie3 = Baddie(24,18,window,p,5, Eq)
+    print Eq.queue
     while not p.at_exit():
         key = window.checkKey()
         if key == 'q':
@@ -70,7 +64,8 @@ def main ():
         if key in MOVE:
             (dx,dy) = MOVE[key]
             p.move(dx,dy)
-
+        time.sleep(0.05)
+        Eq.dequeue_if_ready()
         # baddies should probably move here
 
     won(window)
