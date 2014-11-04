@@ -6,8 +6,11 @@ class Player (Character):
     def __init__ (self,x,y,window):
         Character.__init__(self,'android.gif',x,y,window)
 
-    def at_exit (self):
+    def at_exit_old (self):
         return (self._y == 0)
+
+    def at_exit (self,exitPos):
+        return (index(self._x,self._y) == exitPos)
 
     def dig(self, key, q):
         xDict = {'a':-1, 'z':1}

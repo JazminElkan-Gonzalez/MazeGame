@@ -5,6 +5,7 @@ from level import *
 class Character (object):
     def __init__ (self,pic,x,y,window):
         (sx,sy) = screen_pos(x,y)
+        print "char: ", sx, sy
         self._img = Image(Point(sx+CELL_SIZE/2,sy+CELL_SIZE/2+2),pic)
         self._window = window
         self._img.draw(window)

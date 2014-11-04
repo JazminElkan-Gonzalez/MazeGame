@@ -5,10 +5,12 @@ class Level(object):
 
     game = None
 
-    def __init__(self):
-        self._board=self.create_level()
+    def __init__(self, layout):
         self._objects = []
+        self._winLadders = []
         Level.game = self
+        self._board=self.create_level(layout)
+        # self._board=self.create_level_old()
 
     def board(self):
         return self._board
@@ -21,6 +23,10 @@ class Level(object):
 # 2 ladder
 # 3 rope
 # 4 gold
+# 5 winladder
+# 6 winspace
+# p player
+# b baddie
 
     def win(self,window):
         def image (sx,sy,what):
@@ -34,7 +40,22 @@ class Level(object):
             elt = image(sx,sy, "ladder.gif")
             elt.draw(window)
 
-    def create_level(self):
+    def create_level(self, layout):
+        screen = []
+        for i in range(len(layout)):
+            if layout[i] == 5 or layout[i] == 'b' or layout[i] == 'p':      #winladder
+                layout[i] = 0
+            elif layout[i] == 6:    #winspace
+                self._winLadders.append(i)
+                layout[i] = 0
+            screen.append(layout[i])
+        return screen
+            # elif layout[i] == 'b':
+                # bx, by = screen_pos_index(i)
+                # Baddie(bx, by, window)
+                # baddie3 = Baddie(24,18,window,p,5, Eq)
+
+    def create_level_old(self):
         screen = []
         screen.extend([1,1,1,1,1,1,1,1,1,1,1,1,1,2,0,0,0,0,0,0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,0])
         screen.extend([1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])

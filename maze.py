@@ -25,9 +25,32 @@ MOVE = {
     'Down' : (0,1)
 }
 
+# 0 empty
+# 1 brick
+# 2 ladder
+# 3 rope
+# 4 gold
+# 5 winladder
+# 6 winspace
+# p player
+# b baddie
+
 
 def main ():
-    lol = Level()
+    levelLayout = []
+    with open('levels.txt') as inputfile:
+        bQuantity = 0
+        for line in inputfile:
+            line = line.replace(",","").strip()
+            for block in line:
+                try:
+                    block = int(block)
+                except:
+                    pass
+                if block == 'b':
+                    bQuantity = bQuantity + 1
+                levelLayout.append(block)
+
     window = GraphWin("Maze", WINDOW_WIDTH+20, WINDOW_HEIGHT+20)
 
     rect = Rectangle(Point(5,5),Point(WINDOW_WIDTH+15,WINDOW_HEIGHT+15))
@@ -39,16 +62,32 @@ def main ():
     rect.setOutline('white')
     rect.draw(window)
 
-    level = lol.create_level()
-
-    screen = lol.create_screen(window)
     Eq = Queue()
-    p = Player(17,18,window)
-    baddie1 = Baddie(19,2,window,p,5, Eq)
-    baddie2 = Baddie(19,7,window,p,5, Eq)
-    baddie3 = Baddie(24,18,window,p,5, Eq)
-    print Eq.queue
-    while not p.at_exit():
+    sx, sy = screen_pos_index(index(17,18))
+
+    if 'p' in levelLayout:
+        pIndex = levelLayout.index('p')
+        x,y = index_xy(pIndex)
+        sx, sy = screen_pos_index(pIndex)
+        p = Player(x,y,window)
+        levelLayout[pIndex] = 0
+
+    if 'b' in levelLayout:
+        for i in range(bQuantity):
+            bIndex = levelLayout.index('b')
+            sx, sy = screen_pos_index(bIndex)
+            x,y = index_xy(bIndex)
+            b = Baddie(x,y,window,p,5,Eq)
+            levelLayout[bIndex] = 0
+
+    exitPos = screen_pos_index(levelLayout.index(6))
+
+    lol = Level(levelLayout)
+
+    level = lol.create_level(levelLayout)
+    screen = lol.create_screen(window)
+
+    while not p.at_exit(exitPos):
         key = window.checkKey()
         if key == 'q':
             window.close()
