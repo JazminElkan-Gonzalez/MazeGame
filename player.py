@@ -10,6 +10,7 @@ class Player (Character):
         return (self._y == 0)
 
     def at_exit (self,exitPos):
+        # print "self x and y: ", index(self._x,self._y)
         return (index(self._x,self._y) == exitPos)
 
     def dig(self, key, q):

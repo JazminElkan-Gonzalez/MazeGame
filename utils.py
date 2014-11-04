@@ -37,4 +37,4 @@ def won (window):
     t.setTextColor('red')
     t.draw(window)
     window.getKey()
-    exit(0)
+    # exit(0)

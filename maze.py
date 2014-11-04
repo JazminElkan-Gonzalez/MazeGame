@@ -36,20 +36,35 @@ MOVE = {
 # b baddie
 
 
-def main ():
+def main (levelNum):
     levelLayout = []
+    totalLevels = 0
     with open('levels.txt') as inputfile:
+        # for allLine in inputfile:
+        #     if allLine == "\n":
+        #         totalLevels = totalLevels + 1
+        # if levelNum == totalLevels+1:
+        #     exit(0)
+        levelN = 0
         bQuantity = 0
+        # print "here"
+        # print inputfile
         for line in inputfile:
-            line = line.replace(",","").strip()
-            for block in line:
-                try:
-                    block = int(block)
-                except:
-                    pass
-                if block == 'b':
-                    bQuantity = bQuantity + 1
-                levelLayout.append(block)
+            # print "line!!"
+            if line == "\n":
+                levelN = levelN + 1
+            if levelN == levelNum:
+                line = line.replace(",","").strip()
+                for block in line:
+                    try:
+                        block = int(block)
+                    except:
+                        pass
+                    if block == 'b':
+                        bQuantity = bQuantity + 1
+                    levelLayout.append(block)
+    if levelLayout == []:
+        exit(0)
 
     window = GraphWin("Maze", WINDOW_WIDTH+20, WINDOW_HEIGHT+20)
 
@@ -65,8 +80,8 @@ def main ():
     Eq = Queue()
     sx, sy = screen_pos_index(index(17,18))
     levelLayoutCopy = levelLayout[:]
+    exitPos = levelLayout.index(6)
 
-    exitPos = screen_pos_index(levelLayout.index(6))
     lol = Level(levelLayout)
 
     level = lol.create_level(levelLayout)
@@ -80,17 +95,14 @@ def main ():
         levelLayout[pIndex] = 0
         levelLayoutCopy[pIndex] = 0
 
-
     if 'b' in levelLayoutCopy:
         for i in range(bQuantity):
             bIndex = levelLayoutCopy.index('b')
             sx, sy = screen_pos_index(bIndex)
             x,y = index_xy(bIndex)
-            print x,y
             b = Baddie(x,y,window,p,5,Eq)
             levelLayout[bIndex] = 0
             levelLayoutCopy[bIndex] = 0
-
 
     while not p.at_exit(exitPos):
         key = window.checkKey()
@@ -99,7 +111,7 @@ def main ():
             exit(0)
         if key == 'a' or key == 'z':
             p.dig(key, Eq)
-        if 4 not in lol.board():
+        if 4 in lol.board():
             lol.win(window)
         if key in MOVE:
             (dx,dy) = MOVE[key]
@@ -111,6 +123,10 @@ def main ():
         # baddies should probably move here
 
     won(window)
+    try:
+        main(levelNum+1)
+    except:
+        exit(0)
 
 if __name__ == '__main__':
-    main()
+    main(0)
