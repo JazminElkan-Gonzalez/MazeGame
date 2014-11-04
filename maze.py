@@ -64,28 +64,33 @@ def main ():
 
     Eq = Queue()
     sx, sy = screen_pos_index(index(17,18))
-
-    if 'p' in levelLayout:
-        pIndex = levelLayout.index('p')
-        x,y = index_xy(pIndex)
-        sx, sy = screen_pos_index(pIndex)
-        p = Player(x,y,window)
-        levelLayout[pIndex] = 0
-
-    if 'b' in levelLayout:
-        for i in range(bQuantity):
-            bIndex = levelLayout.index('b')
-            sx, sy = screen_pos_index(bIndex)
-            x,y = index_xy(bIndex)
-            b = Baddie(x,y,window,p,5,Eq)
-            levelLayout[bIndex] = 0
+    levelLayoutCopy = levelLayout[:]
 
     exitPos = screen_pos_index(levelLayout.index(6))
-
     lol = Level(levelLayout)
 
     level = lol.create_level(levelLayout)
     screen = lol.create_screen(window)
+
+    if 'p' in levelLayoutCopy:
+        pIndex = levelLayoutCopy.index('p')
+        x,y = index_xy(pIndex)
+        sx, sy = screen_pos_index(pIndex)
+        p = Player(x,y,window)
+        levelLayout[pIndex] = 0
+        levelLayoutCopy[pIndex] = 0
+
+
+    if 'b' in levelLayoutCopy:
+        for i in range(bQuantity):
+            bIndex = levelLayoutCopy.index('b')
+            sx, sy = screen_pos_index(bIndex)
+            x,y = index_xy(bIndex)
+            print x,y
+            b = Baddie(x,y,window,p,5,Eq)
+            levelLayout[bIndex] = 0
+            levelLayoutCopy[bIndex] = 0
+
 
     while not p.at_exit(exitPos):
         key = window.checkKey()
@@ -101,7 +106,7 @@ def main ():
             p.move(dx,dy)
         if lol._board[index(p.x(), p.y())] == 1:
             lost(window) 
-        time.sleep(0.05)
+        time.sleep(0.03)
         Eq.dequeue_if_ready(window)
         # baddies should probably move here
 
